@@ -33,15 +33,17 @@ def calculate_distance(coord1, coord2):
 def speak(text):
     with tempfile.NamedTemporaryFile(delete=True) as temp_audio:
         tts = gTTS(text=text, lang="en")
-        tts.save(temp_audio.name + ".mp3")
-        os.system(f"mpg321 {temp_audio.name}.mp3")  # Works on Streamlit Cloud
+        temp_audio_path = temp_audio.name + ".mp3"
+        tts.save(temp_audio_path)
+        st.audio(temp_audio_path, format="audio/mp3")
 
 # Detect objects using YOLO model
 def detect_objects():
     cap = cv2.VideoCapture(0)
-    while True:
+    while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
+            st.error("Camera not working.")
             break
         results = model(frame)
         detections = results.pandas().xyxy[0]
