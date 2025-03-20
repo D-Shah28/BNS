@@ -7,5 +7,4 @@ speechrecognition==3.10.0
 pyttsx3==2.90
 geopy==2.4.1
 geocoder==1.38.1
-difflib
 multiprocessing
